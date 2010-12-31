@@ -1,0 +1,41 @@
+<h2 id="redishttpisjustafunsimplephpscriptthatexposesredisoverhttp">RedisHTTP is just a fun simple PHP script that exposes Redis over HTTP</h2>
+
+<p>It simply takes the url path and passes it to Redis, getting the response back either Raw or encode in Json. The rational behnid this is to get a &#8220;free&#8221; persistant key val store in javascript. see http://cplus.about.com/b/2010/11/07/openkeyval-an-online-datastore.htm</p>
+
+<p>On the choice of redisent see http://dev.af83.com/redis/which-php-library-use-redis/2010/12/30</p>
+
+<p>Using it is as simple as :
+<code>
+$redishttp= new RedisHTTP();
+echo json_encode(RedisHTTP::run());
+</code>
+So simply visiting http://localhost/redis/set/Hello/world</p>
+
+<p>Will Set the key &#8220;Hello&#8221; to the value &#8220;World&#8221;</p>
+
+<p>Visiting http://localhost/redis/get/Hello</p>
+
+<p>Will output:
+`
+World</p>
+
+<p>Visiting http://localhost/redis/flushdb <em>will destory your redis data</em>. All of it. Without ever asking for any kind of confirmation.
+So if ever you mean to use this, you <em>must</em> implement server side controls.</p>
+
+<p>All of Redis methods are supported. So you can use for example
+http://localhost/redis/info
+to monitor your redis server</p>
+
+<p>you can set the redis host and port with $redishttp= new RedisHTTP(&#8216;localhost, 6379);</p>
+
+<p>Note: there is no state on the server side. So each command you send is a new connection; This is mostly important so you understand: No piping, and select will basically do nothing</p>
+
+<p>Below is a simple ajax form that sends commands to redis and shows the result seperate the commands and the parameters by a forward slash</p>
+
+<p>examples (just type this in the input box below):</p>
+
+<p>info
+set/hello/world
+get/hello</p>
+
+<p>BSD licence (c) 2010 AF83 more on af83 dev blog http://dev.af83.com</p>

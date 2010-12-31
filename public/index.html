@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>redishttp</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Ori Pekelman">
+	<!-- Date: 2010-12-27 -->
+	<style>html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strike,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}article,aside,dialog,figure,footer,header,hgroup,menu,nav,section{display:block}body{font:75%/1.5"Lucida Grande","Lucida Sans",Helvetica,Arial,Tahoma,Verdana,sans-serif;background:#ddd;color:#333;text-align:left;display:table;width:100%}h1{font-size:2em;font-family:Helvetica,Arial,"Lucida Grande","Lucida Sans",Tahoma,Verdana,sans-serif;text-shadow:0 1px 1px#fff;color:#333}h2{font-size:1.6666666666666667em;line-height:0.9em;margin-bottom:0.9em;font-family:Helvetica,Arial,"Lucida Grande","Lucida Sans",Tahoma,Verdana,sans-serif;text-shadow:0 1px 1px #fff;color:#333}h3{clear:left;font-size:1.5em;line-height:1em;margin-bottom:1em;font-family:Helvetica,Arial,"Lucida Grande","Lucida Sans",Tahoma,Verdana,sans-serif}h4{font-size:1.3333333333333333em;line-height:1.125em;margin-bottom:1.125em}h5{font-size:1.1666666666666667em;line-height:1.2857142857142858em;margin-bottom:1.2857142857142858em}h6,p,q,cite,address{font-size:1em;line-height:1.5em;margin-bottom:1.5em}ul,ol,dl{font-size:1em;margin-bottom:1.5em}li,dd,dt{font-size:1em}a{text-decoration:none;color:darkblue;outline:none}a:hover{text-decoration:none}abbr{speak:spell-out}acronym{speak:normal}#skip-links{height:0;width:0;display:none}nav{position:fixed;top:0;left:0;width:15%;background:#DDE3EB;color:#333;height:100%}navul{list-style:none}nav ul li{padding-bottom:.75em;position:relative}nav ul li span{position:absolute;padding:.1em.4em;right:5%;background:#98a7cc;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#fff;text-shadow:none}nav ul li.active a{color:#fff;text-shadow:0 1px 1px #666666}nav ulli.active a span{margin-top:1px;padding:.1em .4em;margin-right:5%;background:#fff;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#98a7cc;text-shadow:none}nav ul lia{margin-left:20px;padding-left:30px;margin-top:10px;color:#000}section#home-portfolio{width:45%;float:right}section#home-portfolio ul{list-style:none}section#content-wrapper{position:absolute;left:15%;background:#d2d2d2;min-height:100%;width:85%;padding-bottom:3%}blockquote{padding-top:1em;padding-bottom:.75em;padding-right:2%;padding-left:7em;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;-moz-box-shadow:0 3px 3px rgba(0,0,0,0.5);-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.5);box-shadow:0 1px 1px rgba(0,0,0,0.5);no-repeat;margin-bottom:1.5em}footer a{border-bottom:1pxdotted #fff}footer{margin-top:40px;margin-bottom:0}table{width:100%;border-spacing:0;border-collapse:collapse;border:1px solid#ccc;margin-bottom:1.5em}caption{text-align:left;font-size:1em;line-height:1.5em}th{text-align:left;font-weight:bold;border:1px solid#ccc;padding:.25em;background:#ccc}td{text-align:left;font-weight:normal;border:1px solid#ccc;padding:.25em}.page{background-color:#eee;padding:20px;-moz-border-radius: 15px;border-radius: 15px;width:800px;margin:auto;margin-top:20px}.warning{color:red;text-transform:capitalize} #help dl{-moz-column-count: 3;	-moz-column-gap: 20px;-webkit-column-count: 6;-webkit-column-gap: 20px;column-count: 6;column-gap: 20px;}  #help dt{color:white; font-weight:600; margin-bottom:4px}  #help dd{font-style:italic}}
+	</style>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script	 src ="scripts/redishttp.js" ></script>
+</head>
+<body>
+
+<head>
+<div class="page">
+<h2 id="redishttp_is_just_a_fun_simple_php_script_that_exposes_redis_over_http">RedisHTTP is just a fun simple PHP script that exposes Redis over HTTP</h2>
+</div>
+</head>
+<div id="content">
+<div class="page" id="home">
+<section>
+<p>It simply takes the url path and passes it to Redis, getting the response back either Raw or encode in Json. The rational behnid this is to get a &#8220;free&#8221; persistant key val store in javascript. see <a href="http://cplus.about.com/b/2010/11/07/openkeyval-an-online-datastore.htm">http://cplus.about.com/b/2010/11/07/openkeyval-an-online-datastore.htm</a></p>
+
+<p>On the choice of redisent see <a href="http://dev.af83.com/redis/which-php-library-use-redis/2010/12/30">http://dev.af83.com/redis/which-php-library-use-redis/2010/12/30</a></p>
+
+<p>Using it is as simple as :
+<code>
+$redishttp= new RedisHTTP();
+echo json_encode(RedisHTTP::run());
+</code>
+<p>Using it is as simple as :
+<code>
+$redishttp= new RedisHTTP();
+echo RedisHTTP::run();
+</code>
+
+So simply visiting <code> http://localhost/redis/set/Hello/world</code></p>
+
+<p>Will Set the key &#8220;Hello&#8221; to the value &#8220;World&#8221;</p>
+
+<p>Visiting <code>http://localhost/redis/get/Hello</code></p>
+
+<p>Will output:
+<code>
+World
+</code></p>
+<p>
+<em>BTW, You should probably have a Redis instance running...</em></p>
+<p>Visiting http://localhost/redis/flushdb <strong  class="warning">will destory your redis data in the first database</strong>. All of it. Without ever asking for any kind of confirmation.</p>
+<p>Visiting http://localhost/redis/flashall <strong  class="warning">will destory all your redis data</strong>. All of it. Without ever asking for any kind of confirmation.</p>
+
+
+<p>All of Redis methods are supported. So you can use for example
+<code>http://localhost/redis/info</code> to monitor your redis server</p>
+<h2><a href="" id="gethelp">You can click here for the full list of commands</a></h2>
+<div id=help></div>
+
+<p>you can set the redis host and port with <code> $redishttp= new RedisHTTP(&#8216;localhost, 6379);</code></p>
+
+<p><em>Note: there is no state on the server side. So each command you send is a new connection; This is mostly important so you understand: No piping, and select will basically do nothing </em></p>
+
+<p>Below is a simple ajax form that sends commands to redis and shows the result seperate the commands and the parameters by a forward slash</p>
+<p>examples (just type this in the input box below):</p>
+<dl><dt><em>info</em</dt>
+<dt><em>set/hello/world</em<dt>
+<dt><em>get/hello</em</dt>
+</dl>
+<form >
+<input name ="submit" id="submit" type ="submit" value="Send Redis command" />
+<input name ="command" id="command" />
+</form
+<div id="results" style="color:green">
+</div>
+<div id="errors" class="warning">
+</div>
+</section>
+<footer>BSD licence (c) 2010 AF83 <a href="http://dev.af83.com">more on af83 dev blog</a></footer>
+
+</div>
+</div>
+<a href="https://github.com/AF83"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://assets1.github.com/img/5d21241b64dc708fcbb701f68f72f41e9f1fadd6?repo=&url=http%3A%2F%2Fs3.amazonaws.com%2Fgithub%2Fribbons%2Fforkme_left_red_aa0000.png&path=" alt="Fork me on GitHub"></a>
+
+</body>
+</html>
