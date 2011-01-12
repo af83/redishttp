@@ -1,3 +1,12 @@
 [submodule "lib/redisent"]
 	path = lib/redisent
 	url = git@github.com:AF83/redisent.git
+[submodule "lib/node/redis-node-client"]
+	path = lib/node/redis-node-client
+	url = https://github.com/leepa/redis-node-client.git
+[submodule "lib/node_redis"]
+	path = lib/node_redis
+	url = https://github.com/mranney/node_redis.git
+[submodule "lib/node/node_redis"]
+	path = lib/node/node_redis
+	url = https://github.com/mranney/node_redis.git
