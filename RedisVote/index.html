@@ -9,9 +9,9 @@
 	<style>html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strike,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}article,aside,dialog,figure,footer,header,hgroup,menu,nav,section{display:block}body{font:75%/1.5"Lucida Grande","Lucida Sans",Helvetica,Arial,Tahoma,Verdana,sans-serif;background:#ddd;color:#333;text-align:left;display:table;width:100%}h1{font-size:2em;font-family:Helvetica,Arial,"Lucida Grande","Lucida Sans",Tahoma,Verdana,sans-serif;text-shadow:0 1px 1px#fff;color:#333}h2{font-size:1.6666666666666667em;line-height:0.9em;margin-bottom:0.9em;font-family:Helvetica,Arial,"Lucida Grande","Lucida Sans",Tahoma,Verdana,sans-serif;text-shadow:0 1px 1px #fff;color:#333}h3{clear:left;font-size:1.5em;line-height:1em;margin-bottom:1em;font-family:Helvetica,Arial,"Lucida Grande","Lucida Sans",Tahoma,Verdana,sans-serif}h4{font-size:1.3333333333333333em;line-height:1.125em;margin-bottom:1.125em}h5{font-size:1.1666666666666667em;line-height:1.2857142857142858em;margin-bottom:1.2857142857142858em}h6,p,q,cite,address{font-size:1em;line-height:1.5em;margin-bottom:1.5em}ul,ol,dl{font-size:1em;margin-bottom:1.5em}li,dd,dt{font-size:1em}a{text-decoration:none;color:darkblue;outline:none}a:hover{text-decoration:none}abbr{speak:spell-out}acronym{speak:normal}#skip-links{height:0;width:0;display:none}nav{position:fixed;top:0;left:0;width:15%;background:#DDE3EB;color:#333;height:100%}navul{list-style:none}nav ul li{padding-bottom:.75em;position:relative}nav ul li span{position:absolute;padding:.1em.4em;right:5%;background:#98a7cc;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#fff;text-shadow:none}nav ul li.active a{color:#fff;text-shadow:0 1px 1px #666666}nav ulli.active a span{margin-top:1px;padding:.1em .4em;margin-right:5%;background:#fff;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#98a7cc;text-shadow:none}nav ul lia{margin-left:20px;padding-left:30px;margin-top:10px;color:#000}section#home-portfolio{width:45%;float:right}section#home-portfolio ul{list-style:none}section#content-wrapper{position:absolute;left:15%;background:#d2d2d2;min-height:100%;width:85%;padding-bottom:3%}blockquote{padding-top:1em;padding-bottom:.75em;padding-right:2%;padding-left:7em;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;-moz-box-shadow:0 3px 3px rgba(0,0,0,0.5);-webkit-box-shadow:0 1px 1px rgba(0,0,0,0.5);box-shadow:0 1px 1px rgba(0,0,0,0.5);no-repeat;margin-bottom:1.5em}footer a{border-bottom:1pxdotted #fff}footer{margin-top:40px;margin-bottom:0}table{width:100%;border-spacing:0;border-collapse:collapse;border:1px solid#ccc;margin-bottom:1.5em}caption{text-align:left;font-size:1em;line-height:1.5em}th{text-align:left;font-weight:bold;border:1px solid#ccc;padding:.25em;background:#ccc}td{text-align:left;font-weight:normal;border:1px solid#ccc;padding:.25em}.page{background-color:#eee;padding:20px;-moz-border-radius: 15px;border-radius: 15px;width:800px;margin:auto;margin-top:20px}.warning{color:red;text-transform:capitalize} #help dl{-moz-column-count: 3;	-moz-column-gap: 20px;-webkit-column-count: 6;-webkit-column-gap: 20px;column-count: 6;column-gap: 20px;}  #help dt{color:white; font-weight:600; margin-bottom:4px}  #help dd{font-style:italic}}
 	</style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script	 src ="scripts/redisvote.js" ></script>
-	<script	 src ="scripts/nano/jquery.nano.js" ></script>
-	
+	<script src ="scripts/redisvote.js" ></script>
+	<script src="scripts/flot/jquery.flot.js"></script>
+    
 </head>
 <body>
 
@@ -22,22 +22,17 @@
 </header>
 <div id="content">
     <div class="page" id="home">
-	    <form id="questions">
-	        <input name ="submit" id="submit" type ="submit" value="Send Redis command" />
-	        <input name ="command" id="command" />
-	    </form>
 	    <form id="vote">
-			<label id="questionlabel"></label>
-	        <input name ="command" id="command" />
 	    </form>
-    <form>
-        <input name ="submit" id="submit" type ="submit" value="Send Redis command" />
-        <input name ="command" id="command" />
-    </form>
     <div id="results" style="color:green"></div>
     <div id="errors" class="warning"></div>
     <footer>BSD licence (c) 2010 AF83 <a href="http://dev.af83.com">more on af83 dev blog</a></footer>
     </div>
 </div>
+<div id="graph" style ="width:200px;height:400px;" ></div>
+<form>
+    <input name ="submit" id="submit" type ="submit" value="Send Redis command" />
+    <input name ="command" id="command" />
+</form>
 </body>
 </html>
