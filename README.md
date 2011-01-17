@@ -1,4 +1,4 @@
-## RedisHTTP is just a fun simple PHP script that exposes Redis over HTTP
+## RedisHTTP is just a fun simple PHP / nodejs script that exposes Redis over HTTP
 
 It simply takes the url path and passes it to Redis, getting the response back either Raw or encode in Json. The rational behnid this is to get a "free" persistant key val store in javascript. see http://cplus.about.com/b/2010/11/07/openkeyval-an-online-datastore.htm
 

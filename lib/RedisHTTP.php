@@ -1,6 +1,6 @@
 <?php
 /**
-* Copyright (c) 2010 AF83
+* Copyright (c) 2011 AF83
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -113,17 +113,16 @@ class RedisHTTP
              $response =   call_user_func_array(array($redis, self::$command), self::$url_params);
              return $response;
             $response = forward_static_call_array(array('RedisHTTP', self::$command), self::$url_params);
-            $support_responses= Array ('text/plain', 'application/json');
             return $response;
         }
     }
 
 
-class RedisHTTP404Exception extends Exception {
+class RedisHTTP400Exception extends Exception {
     function __construct($message, $code = 0, Exception $previous = null){
         // make sure everything is assigned properly
         parent::__construct($message, $code, $previous);
-        header('HTTP/1.1 404 Not Found');
+        header('HTTP/1.1 400 Bad Request');
     }
 }
 class RedisHTTP500Exception extends Exception {
@@ -142,6 +141,6 @@ class RedisHTTP500Exception extends Exception {
  * @author Ori Pekelman
  */
 function catch_redis_warning($errno, $errstr) {
-    throw new RedisHTTP404Exception ($errstr, $errno); 
+    throw new RedisHTTP400Exception ($errstr, $errno); 
 
 }
