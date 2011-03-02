@@ -10,3 +10,6 @@
 [submodule "lib/node/node_redis"]
 	path = lib/node/node_redis
 	url = https://github.com/mranney/node_redis.git
+[submodule "lib/node/oauth2_client"]
+	path = lib/node/oauth2_client
+	url = git://github.com/AF83/oauth2_client_node.git

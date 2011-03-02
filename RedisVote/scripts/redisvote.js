@@ -1,24 +1,27 @@
 var CurrentQuestion = 0;
 var voted = false;
 var RedisBase = "../public/redis/";
-var RedisBase = "http://localhost:3000/redis/";
+//var RedisBase = "http://localhost:3000/redis/";
 var commands={
                 vote: "hincrby/question_{0}/{1}/1",
-                getResponses: "hgetall/question_{0}"
-            
+                getResponses: "hgetall/question_{0}",
+                questionTitle:"get/question_{0}_title"
             }
 
 $(document).ready(function () {
     $('input[name="resp"]').live('click', function (event) {
         var command = $.redisHTTP.format(commands.vote, CurrentQuestion, $(this).val());
-        if (!voted) RedisCommand(command);
-        voted = true;
+        //if (!voted) 
+        RedisCommand(command); voted = true;
     });
 });
 
 
 function updateQuestion(data) {
         CurrentQuestion=data;
+        var command = $.redisHTTP.format(commands.questionTitle, CurrentQuestion);
+
+        $("#question_label").redisHTTP(command);
         var command =  $.redisHTTP.format(commands.getResponses, CurrentQuestion);
         $("#vote").redisHTTP(command , 
             {

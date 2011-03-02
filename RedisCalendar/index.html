@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<link rel='stylesheet' type='text/css' href='fullcalendar/fullcalendar.css' />
+<link type="text/css" href="scripts/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="scripts/jquery-ui/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
+<script type='text/javascript' src='fullcalendar/fullcalendar.min.js'></script>
+<script src ="../public/scripts/redishttp.js" ></script>
+<script src ="rediscalendar.js" ></script>
+<style type='text/css'>
+
+	body {
+		margin-top: 40px;
+		text-align: center;
+		font-size: 14px;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		}
+		
+	#wrap {
+		width: 1100px;
+		margin: 0 auto;
+		}
+		
+	#external-events {
+		float: left;
+		width: 150px;
+		padding: 20px;
+		margin-left:20px;
+		border: 1px solid #ccc;
+		background: #eee;
+		text-align: left;
+		}
+		
+	#external-events h4 {
+		font-size: 16px;
+		margin-top: 0;
+		padding-top: 1em;
+		}
+		
+	.external-event { /* try to mimick the look of a real event */
+		margin: 10px 0;
+		padding: 2px 4px;
+		background: #3366CC;
+		color: #fff;
+		font-size: .85em;
+		cursor: pointer;
+		}
+		.external-event#upper_room { /* try to mimick the look of a real event */
+			background: green;
+			}
+		.external-event#lower_room { /* try to mimick the look of a real event */
+			background: blue;
+			}
+		
+	#external-events p {
+		margin: 1.5em 0;
+		font-size: 11px;
+		color: #666;
+		}
+		
+	#external-events p input {
+		margin: 0;
+		vertical-align: middle;
+		}
+
+	#calendar {
+		float: left;
+		width: 60%;
+		}
+	#edit_event{
+		display:none;
+	}
+
+</style>
+<script type='text/javascript'>
+
+	$(document).ready(function() {
+		
+		$('#external-events div.external-event').each(function() {
+		
+			// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+			// it doesn't need to have a start or end
+			var eventObject = {
+				title: $.trim($(this).text()) // use the element's text as the event title
+			};
+			
+			// store the Event Object in the DOM element so we can get to it later
+			$(this).data('eventObject', eventObject);
+			
+			// make the event draggable using jQuery UI
+			$(this).draggable({
+				zIndex: 999,
+				revert: true,      // will cause the event to go back to its
+				revertDuration: 0  //  original position after the drag
+			});
+			
+		});
+		
+initcal();
+
+RedisCommand("keys/cal*",getEvents);
+
+function getEvents(keys){
+	$.each(keys, function (k,v){
+		RedisCommand("hgetall/"+v,loadEvent);
+	})
+}
+
+function loadEvent(event){
+	$('#calendar').fullCalendar('renderEvent', event, true);
+}
+
+function saveEvent(event, id){	
+	if (id==undefined){
+		RedisCommand("incr/nextcalid", $.proxy(saveNewEvent,event));
+	}
+	else {
+		RedisCommand("hset/cal" + id + "/title/" + event.title);
+		RedisCommand("hset/cal" + id + "/start/" + event.start);
+		RedisCommand("hset/cal" + id + "/allDay/" + event.allDay);
+		RedisCommand("hset/cal" + id + "/id/" + id);
+	}
+}
+	
+function saveNewEvent(id) {
+	if (id==undefined){
+		alert("boom");
+	}
+	else
+	{
+		saveEvent(this, id)
+	}
+}
+
+function editEventDialog(event){
+editEvent='<form id="edit_event">	<h4>Modify Reservation</h4><label for="title">Title</label><input name="title" />	<label for="room">Salle</label><input name="romm" /></form>';
+	$("#edit_event").dialog({
+        close: function() {
+			alert();
+            },
+        title: "Edit Reservation",
+        width: 400,
+        height: 400,
+        autoOpen: true,
+        closeOnEscape: true,
+        position: 'top',
+        resizable: true,
+        stack: true,
+        buttons: {
+            'Close': function() {
+				console.log($(this));
+                $(this).dialog('close');
+            },
+            'Save': function() {
+
+            },
+            'Delete': function() {
+                },
+            }
+
+        })	
+}
+
+
+
+function initcal(){
+		
+
+		$('#calendar').fullCalendar({
+		
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			selectable: true,
+			selectHelper: true,
+			eventClick: function(calEvent, jsEvent, view) {
+				console.log(calEvent);
+				editEventDialog(calEvent);
+//				calEvent.title = prompt('Event Title:', calEvent.title);
+/*				saveEvent(calEvent,calEvent.id);
+					$('#calendar').fullCalendar('renderEvent',
+					calEvent	,
+					true // make the event "stick"
+					);*/
+//		        alert('Event: ' + calEvent.title);
+//		        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+//		        alert('View: ' + view.name);
+
+		        // change the border color just for fun
+//		        $(this).css('border-color', 'red');
+
+		    },
+			select: function(start, end, allDay) {
+				var title = prompt('Event Title:');
+				if (title) {
+					myEvent ={
+						title: title,
+						start: start,
+						end: end,
+						allDay: allDay
+					};
+					
+					saveEvent(myEvent);
+					$('#calendar').fullCalendar('renderEvent',
+					myEvent	,
+					true // make the event "stick"
+					);
+				}
+				$('#calendar').fullCalendar('unselect');
+			},
+			editable: true,	
+			droppable: true, // this allows things to be dropped onto the calendar !!!
+			drop: function(date, allDay) { // this function is called when something is dropped
+
+				// retrieve the dropped element's stored Event Object
+				var originalEventObject = $(this).data('eventObject');
+
+				// we need to copy it, so that multiple events don't have a reference to the same object
+				var copiedEventObject = $.extend({}, originalEventObject);
+				
+				// assign it the date that was reported
+				copiedEventObject.start = date;
+				copiedEventObject.allDay = allDay;
+
+				console.log(copiedEventObject.title + ' was created' +
+					'(should probably update your database)');				// render the event on the calendar
+					saveEvent(copiedEventObject,copiedEventObject.id);
+				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+				
+				// is the "remove after drop" checkbox checked?
+				if ($('#drop-remove').is(':checked')) {
+					// if so, remove the element from the "Draggable Events" list
+					$(this).remove();
+				}
+				
+			},
+			eventDrop: function(event, delta) {
+				console.log(event.title + ' was moved ' + delta + ' days\n' +
+					'(should probably update your database)');
+					saveEvent(event,event.id);
+			},
+			
+			loading: function(bool) {
+				if (bool) $('#loading').show();
+				else $('#loading').hide();
+			}
+			
+		});
+		}
+		
+	});
+
+</script>
+
+</head>
+<body>
+<div id='loading' style='display:none'>loading...</div>
+<div id='calendar'></div>
+<div id='external-events'>
+<h4>Salles</h4>
+<div id="upper_room" class='external-event'>Salle du haut</div>
+<div id="lower_room" class='external-event'>Salle du bas</div>
+<div id="kitchen" class='external-event'>Cuisine</div>
+<p>
+<input type='checkbox' id='drop-remove' /> <label for='drop-remove'>remove after drop</label>
+</p>
+</div>
+</body>
+</html>
