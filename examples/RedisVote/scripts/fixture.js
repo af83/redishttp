@@ -10,4 +10,5 @@ function mockQuestions() {
     RedisCommand("hset/question_2/response2_1/0");
     RedisCommand("hset/question_2/response2_2/0");
     RedisCommand("hset/question_2/response2_3/0");
+	alert("Data Loaded");
 }

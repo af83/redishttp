@@ -16,7 +16,8 @@
 <body>
 <header>
 <div class="page">
-<h2 id="redishttp_is_just_a_fun_simple_php_script_that_exposes_redis_over_http">RedisHTTP is just a fun simple PHP script that exposes Redis over HTTP</h2>
+<h2 id="redishttp_is_just_a_fun_simple_php_script_that_exposes_redis_over_http">RedisHTTP is just a fun simple nodejs/PHP script with oAuth2 support that exposes Redis over HTTP with a nice jQuery plugin </h2>
+It allows you to write full fledged application in 100% client side code, and still have serverside persistance, authentication and authorization;
 </div>
 </header>
 <div id="content">
@@ -56,12 +57,18 @@ World
 <p>All of Redis methods are supported. So you can use for example
 <code>http://localhost/redis/info</code> to monitor your redis server</p>
 <h2><a href="" id="gethelp">You can click here for the full list of commands</a></h2>
-<div id=help></div>
+<div id="help"></div>
 
 <p>you can set the redis host and port with <code> $redishttp= new RedisHTTP(&#8216;localhost, 6379);</code></p>
 
-<p><em>Note: there is no state on the server side. So each command you send is a new connection; This is mostly important so you understand: No piping, and select will basically do nothing </em></p>
-
+<p><em>Note: there is no state on the server side. So each command you send is a new connection; This is mostly important so you understand: No piping, and <strong>select</strong> will basically do nothing </em> a later version will support sockets so you can have persistant connections and pub/sub</p>
+</section>
+<section>
+<h2>demos</h2>
+<ul>
+    <li><a href="../RedisVote/">Simple Redis Poll</a></li>
+    <li><a href="../RedisCalendar/">Simple Redis Calendar</a></li>
+</ul>
 <p>Below is a simple ajax form that sends commands to redis and shows the result seperate the commands and the parameters by a forward slash</p>
 <p>examples (just type this in the input box below):</p>
 <dl><dt><em>info</em</dt>

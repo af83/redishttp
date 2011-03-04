@@ -1,6 +1,6 @@
 <?php
-include '../../lib/redisent/redisent.php';
-include '../../lib/RedisHTTP.php';
+include '../../../lib/redisent/redisent.php';
+include '../../../lib/php/RedisHTTP.php';
 
 try {
     $redishttp= new RedisHTTP();
