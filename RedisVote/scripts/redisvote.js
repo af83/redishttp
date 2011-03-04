@@ -1,7 +1,7 @@
 var CurrentQuestion = 0;
 var voted = false;
-var RedisBase = "../public/redis/";
-//var RedisBase = "http://localhost:3000/redis/";
+//var RedisBase = "../public/redis/";
+var RedisBase = "http://localhost:3001/redis/";
 var commands={
                 vote: "hincrby/question_{0}/{1}/1",
                 getResponses: "hgetall/question_{0}",

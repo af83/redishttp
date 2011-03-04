@@ -1,0 +1,14 @@
+{ "name" : "RedisHttp"
+, "description": "A simple HTTP proxy for redis"
+, "version": "0.0.1pre"
+, "dependencies": {
+  "connect": ""
+, "connect-form": ""
+, "formidable": ""
+, "cookie-sessions": ""
+, "connect-sts": ""
+, "base64": ""
+, "oauth2-client": ""
+}
+, "engines" : {"node" : "~0.4.0"}
+}

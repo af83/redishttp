@@ -35,6 +35,7 @@ function RedisCommand(command, callback, err) {
         cache: false,
         success: callback,
         error: err,
+		dataType: 'jsonp',
     });
 }
 
