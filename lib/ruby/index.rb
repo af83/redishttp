@@ -4,7 +4,7 @@ require 'redis'
 require 'json'
 
 get '/*' do
-  r = Redis.new.send(*params[:splat][0].split('/'))
+  r = Redis.new.send(*params[:splat].first.split('/'))
   resp = r ? r.to_json : '{}'
   resp = "#{params[:callback]}(#{resp});" if params[:callback]
   resp
